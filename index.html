@@ -46,7 +46,7 @@
   .bt.zap small { color: rgba(255,255,255,.9); }
   .bt.zap .ic { background: rgba(255,255,255,.22); color: #fff; }
   /* chamada sutil no WhatsApp: anel que pulsa + brilho que atravessa a cada ~4s */
-  .bt.zap { position: relative; overflow: hidden; animation: chama 2.8s ease-out 1s infinite; }
+  .bt.zap { position: relative; overflow: hidden; }
   .bt.zap::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-18deg); animation: brilho 4.2s ease-in-out 1.5s infinite; pointer-events: none; }
   .bt.zap .ic svg { animation: balanca 4.2s ease-in-out 1.5s infinite; transform-origin: 50% 60%; }
   .bt.zap:hover, .bt.zap:focus-visible { animation-play-state: paused; }
@@ -62,12 +62,38 @@
   .respiro { flex: 1; min-height: calc(min(100vw, 480px) * .62); }
   footer { margin: 0 -18px; padding: 14px 18px 18px; background: linear-gradient(180deg, rgba(10,37,71,0), rgba(10,37,71,.85) 45%); color: #fff; text-align: center; font-size: 11px; line-height: 1.5; }
   footer b { font-weight: 700; }
-  @media (prefers-reduced-motion: reduce) { .bt { transition: none; } .luz, .bolha, .bt.zap, .bt.zap::after, .bt.zap .ic svg { animation: none; } .bolha { opacity: .6; } }
+  /* ===== entrada da página: logo → frase → botões em cascata → Maneco sobe → luz e bolinhas acendem ===== */
+  .logo { animation: logoEntra 1s cubic-bezier(.2,.9,.25,1.15) .1s backwards; }
+  header p { animation: sobeSuave .7s ease-out .55s backwards; }
+  main > .bt, .duas > .bt { animation: botaoEntra .6s cubic-bezier(.2,.8,.25,1.1) backwards; }
+  main > .bt:nth-of-type(1) { animation-delay: .8s; }
+  main > .bt:nth-of-type(2) { animation-delay: .92s; }
+  main > .bt:nth-of-type(3) { animation-delay: 1.04s; }
+  .duas > .bt:nth-child(1) { animation-delay: 1.16s; }
+  .duas > .bt:nth-child(2) { animation-delay: 1.24s; }
+  main > .bt.sac { animation-delay: 1.36s; }
+  /* WhatsApp: entra junto com os outros e só depois começa a chamar atenção */
+  main > .bt.zap { animation: botaoEntra .6s cubic-bezier(.2,.8,.25,1.1) .8s backwards, chama 2.8s ease-out 2.8s infinite; }
+  .bt.zap::after { animation-delay: 3.2s; }
+  .bt.zap .ic svg { animation-delay: 3.2s; }
+  .maneco { animation: manecoSobe 1s cubic-bezier(.2,.9,.3,1.12) 1.5s backwards; }
+  .fx { position: absolute; inset: 0; animation: aparece 1.4s ease-out 2s backwards; }
+  .onda { position: absolute; left: 50%; bottom: 18%; width: 70%; aspect-ratio: 1; margin-left: -35%; border-radius: 50%; background: radial-gradient(circle, rgba(78,188,140,0) 40%, rgba(120,230,190,.55) 55%, rgba(78,188,140,0) 70%); opacity: 0; animation: onda 1.6s ease-out 1.9s; pointer-events: none; }
+  footer { animation: aparece .8s ease-out 2.3s backwards; }
+  @keyframes logoEntra { 0% { opacity: 0; transform: translateY(-14px) scale(.82); filter: blur(6px); } 60% { opacity: 1; filter: blur(0); } 100% { transform: none; } }
+  @keyframes sobeSuave { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes botaoEntra { from { opacity: 0; transform: translateY(26px) scale(.96); } }
+  @keyframes manecoSobe { 0% { opacity: 0; transform: translateY(40%); } 60% { opacity: 1; } 100% { transform: none; } }
+  @keyframes aparece { from { opacity: 0; } }
+  @keyframes onda { 0% { opacity: 0; transform: scale(.3); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.7); } }
+  @media (prefers-reduced-motion: reduce) { .logo, header p, main > .bt, .duas > .bt, .maneco, .fx, footer { animation: none !important; } .onda { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .bt { transition: none; } .luz, .bolha, .bt.zap, .bt.zap::after, .bt.zap .ic svg { animation: none !important; } .bolha { opacity: .6; } }
 </style>
 </head>
 <body>
 <div class="pagina">
   <div class="cena" aria-hidden="true">
+    <div class="fx">
     <span class="luz azul"></span>
     <span class="luz verde"></span>
     <span class="bolha " style="left:6%;bottom:48%;width:46px;height:46px;--t:13s;--d:-2s;--x:14px;--o:0.8"></span>
@@ -82,6 +108,8 @@
     <span class="bolha az" style="left:92%;bottom:64%;width:20px;height:20px;--t:13s;--d:-7s;--x:-6px;--o:0.7"></span>
     <span class="bolha " style="left:30%;bottom:38%;width:14px;height:14px;--t:10s;--d:-5s;--x:-8px;--o:0.6"></span>
     <span class="bolha foco" style="left:84%;bottom:12%;width:40px;height:40px;--t:15s;--d:-10s;--x:-12px;--o:0.65"></span>
+    </div>
+    <span class="onda"></span>
     <img class="maneco" src="maneco.webp" alt="" width="1024" height="699">
   </div>
   <header>
