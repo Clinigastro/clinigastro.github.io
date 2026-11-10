@@ -45,6 +45,14 @@
   .bt.zap { background: var(--verde); color: #fff; }
   .bt.zap small { color: rgba(255,255,255,.9); }
   .bt.zap .ic { background: rgba(255,255,255,.22); color: #fff; }
+  /* chamada sutil no WhatsApp: anel que pulsa + brilho que atravessa a cada ~4s */
+  .bt.zap { position: relative; overflow: hidden; animation: chama 2.8s ease-out 1s infinite; }
+  .bt.zap::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; background: linear-gradient(100deg, transparent, rgba(255,255,255,.35), transparent); transform: skewX(-18deg); animation: brilho 4.2s ease-in-out 1.5s infinite; pointer-events: none; }
+  .bt.zap .ic svg { animation: balanca 4.2s ease-in-out 1.5s infinite; transform-origin: 50% 60%; }
+  .bt.zap:hover, .bt.zap:focus-visible { animation-play-state: paused; }
+  @keyframes chama { 0% { box-shadow: 0 6px 18px rgba(4,20,45,.25), 0 0 0 0 rgba(78,188,140,.55); } 70%,100% { box-shadow: 0 6px 18px rgba(4,20,45,.25), 0 0 0 12px rgba(78,188,140,0); } }
+  @keyframes brilho { 0%,55% { left: -60%; } 85%,100% { left: 130%; } }
+  @keyframes balanca { 0%,60%,100% { transform: rotate(0); } 66% { transform: rotate(-12deg); } 72% { transform: rotate(10deg); } 78% { transform: rotate(-6deg); } 84% { transform: rotate(0); } }
   .duas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .duas .bt { font-size: 14px; padding-right: 10px; }
   .bt.sac { background: rgba(255,255,255,.16); color: #fff; box-shadow: none; border: 1px solid rgba(255,255,255,.45); }
@@ -54,7 +62,7 @@
   .respiro { flex: 1; min-height: calc(min(100vw, 480px) * .62); }
   footer { margin: 0 -18px; padding: 14px 18px 18px; background: linear-gradient(180deg, rgba(10,37,71,0), rgba(10,37,71,.85) 45%); color: #fff; text-align: center; font-size: 11px; line-height: 1.5; }
   footer b { font-weight: 700; }
-  @media (prefers-reduced-motion: reduce) { .bt { transition: none; } .luz, .bolha { animation: none; } .bolha { opacity: .6; } }
+  @media (prefers-reduced-motion: reduce) { .bt { transition: none; } .luz, .bolha, .bt.zap, .bt.zap::after, .bt.zap .ic svg { animation: none; } .bolha { opacity: .6; } }
 </style>
 </head>
 <body>
@@ -87,10 +95,14 @@
       <span>Agendar pelo WhatsApp<small>(48) 3045-6979 · fale com a Manu</small></span>
     </a>
 
+    <!-- Resultados de exames: escondido temporariamente a pedido (10/11/2026). Para voltar, é só tirar este comentário.
+
     <a class="bt" href="https://clinigastro.pixeon.com/web_laudos/login.asp" target="_blank" rel="noopener">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
       <span>Resultados de exames<small>Acesse seus laudos online</small></span>
     </a>
+
+    -->
 
     <a class="bt" href="https://www.clinigastro.com/" target="_blank" rel="noopener">
       <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
